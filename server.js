@@ -12,10 +12,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // MongoDB connection
-mongoose.connect('mongodb+srv://sandeepluh0001:OuWXzxJffnoJcVK7@upskill-backend-all.cvofcz4.mongodb.net/?retryWrites=true&w=majority&appName=upskill-backend-all', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => console.log("MongoDB connected"))
+mongoose.connect('mongodb+srv://sandeepluh0001:OuWXzxJffnoJcVK7@upskill-backend-all.cvofcz4.mongodb.net/?retryWrites=true&w=majority&appName=upskill-backend-all').then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB connection error:", err));
 
 // Route: Set Cookie
