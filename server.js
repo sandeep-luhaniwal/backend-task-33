@@ -28,6 +28,7 @@ app.get('/set-cookie', (req, res) => {
 });
 
 app.get('/get-cookie', (req, res) => {
+  console.log('Cookies received:', req.cookies);
   const token = req.cookies.userToken;
   if (token) {
     res.status(200).json({ message: 'Cookie retrieved', token });
@@ -35,6 +36,7 @@ app.get('/get-cookie', (req, res) => {
     res.status(404).json({ message: 'No cookie found' });
   }
 });
+
 
 app.get('/status/:code', (req, res) => {
   const code = parseInt(req.params.code, 10);
