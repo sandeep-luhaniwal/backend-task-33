@@ -7,12 +7,12 @@ const app = express();
 const PORT = 5000;
 
 // Middleware
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use(cors({ origin: 'https://frontend-task-33.vercel.app', credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/cookiedemo', {
+mongoose.connect('mongodb+srv://sandeepluh0001:OuWXzxJffnoJcVK7@upskill-backend-all.cvofcz4.mongodb.net/?retryWrites=true&w=majority&appName=upskill-backend-all', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => console.log("MongoDB connected"))
