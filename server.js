@@ -10,7 +10,7 @@ const PORT = 5000;
 app.use(cookieParser());
 app.use(express.json());
 app.use(cors({
-  origin: 'https://frontend-task-33.vercel.app/', // React app will run here
+  origin: 'https://frontend-task-33.vercel.app', // React app will run here
   credentials: true // Allow cookies to be sent
 }));
 
