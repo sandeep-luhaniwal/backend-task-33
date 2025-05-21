@@ -4,27 +4,29 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 const app = express();
-const PORT = 'https://backend-task-33.onrender.com';
+const PORT = 5000;
 
-// Middleware
-app.use(cors({ origin: 'https://frontend-task-33.vercel.app', credentials: true }));
+app.use(cors({
+  origin: 'https://frontend-task-33.vercel.app',
+  credentials: true,
+}));
 app.use(express.json());
 app.use(cookieParser());
 
-// MongoDB connection
-mongoose.connect('mongodb+srv://sandeepluh0001:OuWXzxJffnoJcVK7@upskill-backend-all.cvofcz4.mongodb.net/?retryWrites=true&w=majority&appName=upskill-backend-all').then(() => console.log("MongoDB connected"))
+mongoose.connect('mongodb+srv://sandeepluh0001:OuWXzxJffnoJcVK7@upskill-backend-all.cvofcz4.mongodb.net/?retryWrites=true&w=majority&appName=upskill-backend-all')
+  .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB connection error:", err));
 
-// Route: Set Cookie
 app.get('/set-cookie', (req, res) => {
   res.cookie('userToken', '123abc', {
     httpOnly: true,
-    maxAge: 1000 * 60 * 60, // 1 hour
+    maxAge: 1000 * 60 * 60,
+    sameSite: 'None',
+    secure: true,
   });
   res.status(200).json({ message: 'Cookie has been set' });
 });
 
-// Route: Get Cookie
 app.get('/get-cookie', (req, res) => {
   const token = req.cookies.userToken;
   if (token) {
@@ -34,7 +36,6 @@ app.get('/get-cookie', (req, res) => {
   }
 });
 
-// Route: Send JSON with Status Code
 app.get('/status/:code', (req, res) => {
   const code = parseInt(req.params.code, 10);
   const messages = {
@@ -48,5 +49,4 @@ app.get('/status/:code', (req, res) => {
   res.status(code).json({ status: code, message });
 });
 
-// Start server
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
