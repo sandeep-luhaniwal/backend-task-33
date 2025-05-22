@@ -18,8 +18,8 @@ app.get('/api/set-cookie', (req, res) => {
   res.cookie('testCookie', 'cookie-value', {
     maxAge: 86400000, // 1 day
     httpOnly: true,
-    secure: true, // ✅ MUST be true for HTTPS
-    sameSite: 'lax'
+    secure: true,     // ✅ must be true for SameSite=None
+    sameSite: 'None'  // ✅ allow cross-site cookies
   });
 
   res.json({
@@ -27,6 +27,7 @@ app.get('/api/set-cookie', (req, res) => {
     message: 'Cookie has been set successfully'
   });
 });
+
 
 // ✅ Route to get cookie
 app.get('/api/get-cookie', (req, res) => {
