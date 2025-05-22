@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -10,26 +9,26 @@ const PORT = 5000;
 app.use(cookieParser());
 app.use(express.json());
 app.use(cors({
-  origin: 'https://frontend-task-33.vercel.app', // React app will run here
-  credentials: true // Allow cookies to be sent
+  origin: 'https://frontend-task-33.vercel.app', // ✅ your Vercel frontend URL
+  credentials: true // ✅ allow cookies
 }));
 
-// Route to set a cookie
+// ✅ Route to set cookie with secure: true
 app.get('/api/set-cookie', (req, res) => {
   res.cookie('testCookie', 'cookie-value', {
     maxAge: 86400000, // 1 day
     httpOnly: true,
-    secure: false, // set to true in production with HTTPS
+    secure: true, // ✅ MUST be true for HTTPS
     sameSite: 'lax'
   });
-  
+
   res.json({
     success: true,
     message: 'Cookie has been set successfully'
   });
 });
 
-// Route to get cookies
+// ✅ Route to get cookie
 app.get('/api/get-cookie', (req, res) => {
   const cookies = req.cookies;
   res.json({
@@ -38,7 +37,7 @@ app.get('/api/get-cookie', (req, res) => {
   });
 });
 
-// Route with 200 OK response
+// ✅ Other API endpoints
 app.get('/api/ok', (req, res) => {
   res.status(200).json({
     status: 200,
@@ -47,7 +46,6 @@ app.get('/api/ok', (req, res) => {
   });
 });
 
-// Route with 201 Created response
 app.post('/api/create', (req, res) => {
   res.status(201).json({
     status: 201,
@@ -56,7 +54,6 @@ app.post('/api/create', (req, res) => {
   });
 });
 
-// Route with 400 Bad Request response
 app.get('/api/bad-request', (req, res) => {
   res.status(400).json({
     status: 400,
@@ -65,7 +62,6 @@ app.get('/api/bad-request', (req, res) => {
   });
 });
 
-// Route with 404 Not Found response
 app.get('/api/not-found', (req, res) => {
   res.status(404).json({
     status: 404,
@@ -74,7 +70,6 @@ app.get('/api/not-found', (req, res) => {
   });
 });
 
-// Route with 500 Internal Server Error response
 app.get('/api/server-error', (req, res) => {
   res.status(500).json({
     status: 500,
