@@ -5,21 +5,22 @@ const cors = require('cors');
 const app = express();
 const PORT = 5000;
 
-// Middleware
 app.use(cookieParser());
 app.use(express.json());
+
+// ✅ CORS config for Vercel frontend + cross-origin cookie
 app.use(cors({
-  origin: 'https://frontend-task-33.vercel.app', // ✅ your Vercel frontend URL
-  credentials: true // ✅ allow cookies
+  origin: 'https://frontend-task-33.vercel.app',
+  credentials: true
 }));
 
-// ✅ Route to set cookie with secure: true
+// ✅ Set cookie route
 app.get('/api/set-cookie', (req, res) => {
   res.cookie('testCookie', 'cookie-value', {
-    maxAge: 86400000, // 1 day
-    httpOnly: true,
-    secure: true,     // ✅ must be true for SameSite=None
-    sameSite: 'None'  // ✅ allow cross-site cookies
+    maxAge: 86400000,       // 1 day
+    httpOnly: false,        // Set false to read in frontend
+    secure: true,           // Required for SameSite=None
+    sameSite: 'None'        // Required for cross-origin
   });
 
   res.json({
@@ -28,58 +29,51 @@ app.get('/api/set-cookie', (req, res) => {
   });
 });
 
-
-// ✅ Route to get cookie
+// ✅ Get cookie route
 app.get('/api/get-cookie', (req, res) => {
-  const cookies = req.cookies;
   res.json({
     success: true,
-    cookies: cookies
+    cookies: req.cookies
   });
 });
 
-// ✅ Other API endpoints
+// ✅ Extra demo endpoints
 app.get('/api/ok', (req, res) => {
   res.status(200).json({
-    status: 200,
-    message: 'This is a successful response (200 OK)',
-    data: { sample: 'value' }
+    message: '200 OK response',
+    data: { status: 200 }
   });
 });
 
 app.post('/api/create', (req, res) => {
   res.status(201).json({
-    status: 201,
-    message: 'Resource created successfully (201 Created)',
+    message: '201 Created',
     data: req.body
   });
 });
 
 app.get('/api/bad-request', (req, res) => {
   res.status(400).json({
-    status: 400,
-    message: 'This is a bad request (400 Bad Request)',
-    error: 'Missing required parameters'
+    message: '400 Bad Request',
+    error: 'Missing parameters'
   });
 });
 
 app.get('/api/not-found', (req, res) => {
   res.status(404).json({
-    status: 404,
-    message: 'The requested resource was not found (404 Not Found)',
-    error: 'Resource not available'
+    message: '404 Not Found',
+    error: 'Resource not found'
   });
 });
 
 app.get('/api/server-error', (req, res) => {
   res.status(500).json({
-    status: 500,
-    message: 'Internal server error occurred (500 Internal Server Error)',
-    error: 'Something went wrong on the server'
+    message: '500 Server Error',
+    error: 'Internal error'
   });
 });
 
-// Start server
+// ✅ Server start
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`✅ Server running at http://localhost:${PORT}`);
 });
